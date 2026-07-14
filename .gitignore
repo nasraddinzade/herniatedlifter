@@ -1,5 +1,7 @@
-# Local secrets — copy config.php.example to config.php
-config.php
+# NOTE: config.php (admin hash + salt) is committed on purpose so Hostinger's
+# Git auto-deploy delivers it to the server. This is safe only because the repo
+# is PRIVATE. If you ever make it public, rotate the password (regenerate
+# ADMIN_PASSWORD_HASH) and keep config.php out of git instead.
 
 # Runtime data: SQLite database, WAL/SHM sidecars, logs.
 # Keep the directory's .htaccess guard tracked, ignore everything else.

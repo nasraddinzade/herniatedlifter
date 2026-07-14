@@ -23,6 +23,12 @@ the first time any page is opened — you don't run any migration.
 
 ## Deploy to Hostinger (shared hosting)
 
+> **Git auto-deploy.** This repo is set up to deploy from Git, and `config.php`
+> (admin hash + salt) is committed, so a push deploys a fully working admin with
+> no extra step. To change the admin password, run the command in step 2 and
+> commit the new `config.php`. Keep the repository **private** — the hash lives
+> in it. Steps 1–2 below are only needed for a plain FTP upload instead.
+
 ### 1. Upload the files
 
 Using the **File Manager** or **FTP**, upload the whole project into
