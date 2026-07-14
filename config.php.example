@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copy this file to  config.php  and fill in your own values.
+ * config.php is git-ignored — never commit real secrets.
+ */
+
+/*
+ * Admin password hash for admin.php.
+ * Generate it once on the server (or any machine with PHP) and paste the
+ * output between the quotes below — do NOT store the plain password anywhere:
+ *
+ *     php -r "echo password_hash('YOUR_PASSWORD', PASSWORD_DEFAULT), PHP_EOL;"
+ */
+define('ADMIN_PASSWORD_HASH', 'REPLACE_WITH_HASH_FROM_THE_COMMAND_ABOVE');
+
+/*
+ * Random salt used to hash visitor IP + User-Agent, so the raw IP is never
+ * stored or recoverable. Any long random string works; generate one with:
+ *
+ *     php -r "echo bin2hex(random_bytes(16)), PHP_EOL;"
+ */
+define('APP_SALT', 'REPLACE_WITH_A_LONG_RANDOM_STRING');

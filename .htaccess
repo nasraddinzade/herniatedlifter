@@ -1,0 +1,20 @@
+# Prefer index.php over any index.html.
+DirectoryIndex index.php index.html
+
+# Defense-in-depth: never serve secrets or the database, even if the data/
+# directory ends up somewhere the per-directory rule doesn't apply.
+<FilesMatch "\.(sqlite|sqlite3|db|sqlite-wal|sqlite-shm|log)$">
+  Require all denied
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<Files "config.php">
+  Require all denied
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>

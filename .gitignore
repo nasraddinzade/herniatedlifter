@@ -1,0 +1,11 @@
+# Local secrets — copy config.php.example to config.php
+config.php
+
+# Runtime data: SQLite database, WAL/SHM sidecars, logs.
+# Keep the directory's .htaccess guard tracked, ignore everything else.
+/data/*
+!/data/.htaccess
+
+# OS junk
+.DS_Store
+Thumbs.db
