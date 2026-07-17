@@ -1,5 +1,5 @@
-# Prefer index.php over any index.html.
-DirectoryIndex index.php index.html
+# The landing is the static Next.js export (index.html). Serve it first.
+DirectoryIndex index.html index.php
 
 # Defense-in-depth: never serve secrets or the database, even if the data/
 # directory ends up somewhere the per-directory rule doesn't apply.

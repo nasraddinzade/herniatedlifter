@@ -1,23 +1,51 @@
 # Herniated Lifter — early-access capture
 
 A self-contained landing page + sign-up collector with its own statistics.
-No Composer, no external services. Plain PHP 8 + SQLite (via PDO). Everything
-works after uploading the files to `public_html` over FTP.
+No Composer, no external services. The **client is a Next.js app** (statically
+exported to plain HTML/CSS/JS); the **backend is plain PHP 8 + SQLite (via
+PDO)**. Everything runs on Hostinger shared hosting after the files land in
+`public_html` — the static export is served directly, PHP handles the API and
+admin.
 
 ## What's in here
 
-| File / dir            | Purpose                                                        |
-|-----------------------|----------------------------------------------------------------|
-| `index.php`           | The landing page. Logs each visit and serves the same markup.  |
-| `api/subscribe.php`   | POST endpoint that stores sign-ups (JSON in, JSON out).        |
-| `admin.php`           | Password-protected stats dashboard + CSV export.               |
-| `db.php`              | Shared SQLite layer (schema is auto-created on first request). |
-| `config.php.example`  | Template for `config.php` (admin password hash + salt).        |
-| `data/`               | SQLite database and logs. Blocked from the web by `.htaccess`. |
-| `.htaccess`           | Forces `index.php` and hardens access to secrets/DB.           |
+| File / dir            | Purpose                                                          |
+|-----------------------|------------------------------------------------------------------|
+| `index.html`, `_next/`| The landing page — **built** static export of the Next.js client.|
+| `client/`             | Next.js **source** (App Router + TypeScript). Not web-served.    |
+| `api/subscribe.php`   | POST endpoint that stores sign-ups (JSON in, JSON out).          |
+| `api/visit.php`       | Visit-logging beacon called by the client on load.               |
+| `admin.php`           | Password-protected stats dashboard + CSV export.                 |
+| `db.php`              | Shared SQLite layer (schema is auto-created on first request).   |
+| `config.php.example`  | Template for `config.php` (admin password hash + salt).          |
+| `data/`               | SQLite database and logs. Blocked from the web by `.htaccess`.   |
+| `.htaccess`           | Serves `index.html` first and hardens access to secrets/DB.      |
 
 The database file `data/app.sqlite` and the tables are created automatically
 the first time any page is opened — you don't run any migration.
+
+> **Emails / sign-ups** are stored in SQLite (`data/app.sqlite`, table
+> `signups`) on the server. Nothing is emailed out; you read them in `admin.php`
+> and via its **Export CSV** button.
+
+## The Next.js client
+
+Source lives in `client/`; the **built** static files (`index.html`, `_next/`,
+`404.html`) are copied to the repo root and committed, so Hostinger's Git
+auto-deploy publishes them to `public_html` with no build step on the server.
+
+```bash
+cd client
+npm install
+npm run dev      # local dev at http://localhost:3000
+
+npm run deploy   # production build + copy the export to the repo root
+```
+
+After `npm run deploy`, commit the changed root files (`index.html`, `_next/…`)
+and push — auto-deploy does the rest. The form posts to `/api/subscribe.php`
+and the visit beacon to `/api/visit.php` on the same origin, so no CORS or
+config is involved.
 
 ---
 
@@ -36,13 +64,18 @@ Using the **File Manager** or **FTP**, upload the whole project into
 
 ```
 public_html/
-├── index.php
+├── index.html          # built Next.js export (landing)
+├── 404.html
+├── _next/              # built JS/CSS/fonts
 ├── admin.php
 ├── db.php
+├── config.php
 ├── config.php.example
 ├── .htaccess
 ├── api/
-│   └── subscribe.php
+│   ├── subscribe.php
+│   └── visit.php
+├── client/             # Next.js source (blocked from the web)
 └── data/
     └── .htaccess
 ```

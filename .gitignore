@@ -8,6 +8,12 @@
 /data/*
 !/data/.htaccess
 
+# Next.js client: source lives in client/, and the built static export is
+# copied to the repo root and committed. Ignore only the build tooling output.
+client/node_modules/
+client/.next/
+client/out/
+
 # OS junk
 .DS_Store
 Thumbs.db

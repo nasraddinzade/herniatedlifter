@@ -1,0 +1,8 @@
+# The Next.js source is copied into public_html/client by Git auto-deploy but
+# must never be served. Block the whole directory.
+Require all denied
+
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
