@@ -194,3 +194,9 @@ Then:
 - The raw IP is never stored — only `sha256(ip + user-agent + APP_SALT)`.
 - Errors are written to `data/app.log`, never shown to visitors.
 - Rate limit: max 5 sign-up requests per minute per visitor hash (HTTP 429).
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE) — Copyright (c) 2026 Ramin Nasraddinzade.

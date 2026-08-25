@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "description": "Next.js static-export landing for Herniated Lifter. Posts to the PHP API on the same origin.",
+  "author": "Ramin Nasraddinzade",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
